@@ -1,0 +1,65 @@
+# Resources:
+#   http://cheat.errtheblog.com/s/git
+#   http://www.jukie.net/bart/blog/pimping-out-git-log
+#   https://git-scm.com/docs/pretty-formats
+#   https://stackoverflow.com/questions/3321492/git-alias-with-positional-parameters
+
+[color]
+    ui = auto
+
+[color "branch"]
+    current = yellow reverse
+    local = yellow
+    remote = green
+
+[color "status"]
+    added = yellow
+    changed = green
+    untracked = cyan
+
+[alias]
+    gud = reset --hard origin/master
+    rs = restore
+    rss = restore --staged
+
+    p = pull --rebase
+    rmaster = rebase origin/master
+    master = "!gitmaster() { git co master; git p; echo \"$ git sl\"; git sl; }; gitmaster"
+
+    rb = rebase
+    cp = cherry-pick
+    br = branch
+    co = checkout
+
+    ls = ls-files
+    sl = log --format=\"%h %ar %aE %s\" -4
+    s = status -sb
+    st = status
+    suu = diff --name-only --diff-filter=U
+
+    branch-done = "!bt() { git branch -m z$(date +%Y-%m-%d)/$(git rev-parse --symbolic-full-name --abbrev-ref HEAD);}; bt"
+    done = "!gitdone() {  git st; echo \"...RENAMING BRANCH...\"; git branch-done;}; gitdone"
+
+    df = diff
+    dfs = diff --staged
+    dfss = diff --staged --stat             # staging
+    dfm = diff origin/master HEAD           # after committing
+    dfms = diff origin/master HEAD --stat   # after committing
+    dfw = diff --word-diff
+
+    aa = !git add . && git dfss
+    cm = commit -m
+
+    lg = log --stat
+    last = log -2 --stat
+    lgw = log --word-diff -U1
+    lga = log -p -2
+    lgg = log --graph --pretty=format:\"%Cred%h%Creset %C(yellow)%d%Creset - %s\" --all
+    dag = log --graph --format='format:%C(yellow)%h%C(reset) %C(blue)\"%an\" <%ae>%C(reset) %C(magenta)%cr%C(reset)%C(auto)%d%C(r$
+    lgz = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --  date=relat$
+    lol = log --graph --decorate --pretty=oneline --abbrev-commit
+    lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
+	alias = ! git config --get-regexp ^alias\\. | sed -e s/^alias\\.// -e s/\\ /\\ =\\ /
+
+[core]
+    editor = nano
